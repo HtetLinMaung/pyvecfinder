@@ -69,7 +69,15 @@ def search():
                 'data': []
             })
 
-        query_vector, _ = vectorize_image(request.json['image_path'])
+        image_path = request.json['image_path']
+
+        if not os.path.exists(image_path):
+            return jsonify({
+                'code': 404,
+                'message': 'Image file not found!',
+            })
+
+        query_vector, _ = vectorize_image(image_path)
 
         query_vector = np.array(query_vector, dtype='float32').reshape(
             1, -1)  # reshape if necessary
@@ -110,6 +118,12 @@ def add_vector():
     try:
         data = request.json
         image_path = data['image_path']
+
+        if not os.path.exists(image_path):
+            return jsonify({
+                'code': 404,
+                'message': 'Image file not found!',
+            })
         # vector = data['vector']
         vector, D = vectorize_image(image_path)
 
