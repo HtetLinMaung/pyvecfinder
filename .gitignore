@@ -130,7 +130,6 @@ dmypy.json
 
 # Docker
 *.env
-Dockerfile
 .dockerignore
 .docker
 
